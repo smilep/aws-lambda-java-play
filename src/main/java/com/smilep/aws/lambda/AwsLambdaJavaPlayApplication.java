@@ -17,7 +17,7 @@ public class AwsLambdaJavaPlayApplication {
     @Autowired
     private PersonService personService;
 
-    //@Autowired
+    @Autowired
     private PersonHandler personHandler;
 
     public static void main(String[] args) {
@@ -29,7 +29,7 @@ public class AwsLambdaJavaPlayApplication {
         return person -> personService.process(person);
     }
 
-    //@Bean
+    @Bean
     public Function<Map<String, Object>, String> processPersonEvent() {
         return event -> personHandler.handle(event);
     }
