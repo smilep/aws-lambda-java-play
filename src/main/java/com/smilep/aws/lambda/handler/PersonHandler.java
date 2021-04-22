@@ -1,5 +1,6 @@
 package com.smilep.aws.lambda.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smilep.aws.lambda.model.Person;
 import com.smilep.aws.lambda.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +17,22 @@ public class PersonHandler extends SpringBootRequestHandler<Map<String, Object>,
     @Autowired
     private PersonService personService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     public String handle(Map<String, Object> event) {
         event.entrySet().forEach(entry -> log.info("Key : {} Value : {}", entry.getKey(), entry.getValue()));
         Object personObj = event.get("data");
-        if (personObj instanceof Person) {
-            log.info("Yup, got a Person!");
+        Person person = null;
+        try {
+            person = objectMapper.convertValue(personObj, Person.class);
+        } catch (Exception e) {
+            log.info("Person not received : {}", e);
+
         }
-        return "Temporary processed!";
+        if (null == person) {
+            return "Non-Person processed!";
+        }
+        return personService.process(person);
     }
 }
