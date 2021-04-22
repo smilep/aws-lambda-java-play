@@ -9,6 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 @Slf4j
 @Service
 public class DefaultPersonServiceImpl implements PersonService {
@@ -18,12 +24,26 @@ public class DefaultPersonServiceImpl implements PersonService {
 
     @Override
     public String process(Person person) {
-        log.info("Person processed : {}", person.toString());
-        ResponseEntity<Object> responseEntity = restTemplate.getForEntity("https://jsonplaceholder.typicode.com/todos/1", Object.class);
-        if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-            log.info("HTTP call successful with response : {}", responseEntity.getBody());
+        log.info("Person to be processed : {}", person.toString());
+        try {
+            CompletableFuture.runAsync(() -> {
+                log.info("Not making HTTP call because of connectivity issues");
+                // TODO - uncomment HTTP call after after fixing Lambda internet connectivity issue
+                /*ResponseEntity<Object> responseEntity = restTemplate.getForEntity("https://jsonplaceholder.typicode.com/todos/1", Object.class);
+                if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+                    log.info("HTTP call successful with response : {}", responseEntity.getBody());
+                }*/
+            }).get(5, TimeUnit.SECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            log.info("Error calling async task : {}", e);
         }
         return "Person processed!!";
+    }
+
+    @Override
+    public String process(Map<String, Object> event) {
+        log.info("Event received : {}", event);
+        return process(new Person());
     }
 
 }

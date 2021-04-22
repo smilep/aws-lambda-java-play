@@ -1,6 +1,5 @@
 package com.smilep.aws.lambda;
 
-import com.smilep.aws.lambda.handler.PersonHandler;
 import com.smilep.aws.lambda.model.Person;
 import com.smilep.aws.lambda.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,6 @@ public class AwsLambdaJavaPlayApplication {
     @Autowired
     private PersonService personService;
 
-    @Autowired
-    private PersonHandler personHandler;
-
     public static void main(String[] args) {
         SpringApplication.run(AwsLambdaJavaPlayApplication.class, args);
     }
@@ -37,7 +33,7 @@ public class AwsLambdaJavaPlayApplication {
 
     @Bean
     public Function<Map<String, Object>, String> processPersonEvent() {
-        return event -> personHandler.handle(event);
+        return event -> personService.process(event);
     }
 
 }

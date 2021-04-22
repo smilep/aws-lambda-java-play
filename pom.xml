@@ -19,20 +19,10 @@
         <spring-cloud.version>Hoxton.SR10</spring-cloud.version>
         <aws-lambda-events.version>3.8.0</aws-lambda-events.version>
         <aws-lambda-java-core.version>1.2.1</aws-lambda-java-core.version>
+        <spring-boot-thin-layout.version>1.0.23.RELEASE</spring-boot-thin-layout.version>
     </properties>
 
     <dependencies>
-
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-lambda-java-events</artifactId>
-            <version>${aws-lambda-events.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-lambda-java-core</artifactId>
-            <version>${aws-lambda-java-core.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -42,6 +32,18 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-function-web</artifactId><!--For local use only-->
+        </dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-events</artifactId>
+            <version>${aws-lambda-events.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-core</artifactId>
+            <version>${aws-lambda-java-core.version}</version>
         </dependency>
 
         <dependency>
@@ -85,7 +87,7 @@
                     <dependency>
                         <groupId>org.springframework.boot.experimental</groupId>
                         <artifactId>spring-boot-thin-layout</artifactId>
-                        <version>1.0.23.RELEASE</version>
+                        <version>${spring-boot-thin-layout.version}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
