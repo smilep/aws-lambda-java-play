@@ -28,11 +28,11 @@ public class DefaultPersonServiceImpl implements PersonService {
         try {
             CompletableFuture.runAsync(() -> {
                 log.info("Not making HTTP call because of connectivity issues");
-                // TODO - uncomment HTTP call after after fixing Lambda internet connectivity issue
-                /*ResponseEntity<Object> responseEntity = restTemplate.getForEntity("https://jsonplaceholder.typicode.com/todos/1", Object.class);
+                // TODO - handle issue of timeout in case of HTTPS URL below
+                ResponseEntity<Object> responseEntity = restTemplate.getForEntity("http://jsonplaceholder.typicode.com/todos/1", Object.class);
                 if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
                     log.info("HTTP call successful with response : {}", responseEntity.getBody());
-                }*/
+                }
             }).get(5, TimeUnit.SECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             log.info("Error calling async task : {}", e);

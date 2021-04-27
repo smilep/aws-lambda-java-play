@@ -20,5 +20,6 @@ curl --location --request POST 'http://localhost:5123/processPersonEvent' \
 1) Build this code using maven `mvn clean install`
 2) Create a Lambda function on AWS
 3) Upload the jar from target folder (one having 'aws' in its name)
+4) Set main class in Lambda config as `com.smilep.aws.lambda.handler.PersonHandler`   
 4) Create an ENV variable in AWS Lambda called `FUNCTION_NAME` with value `processPersonEvent` (name of the function bean)
 5) Send an event using test window on AWS Lambda console
