@@ -27,7 +27,7 @@ public class DefaultPersonServiceImpl implements PersonService {
         log.info("Person to be processed : {}", person.toString());
         try {
             CompletableFuture.runAsync(() -> {
-                log.info("Not making HTTP call because of connectivity issues");
+                log.info("HTTP call in new thread");
                 // TODO - handle issue of timeout in case of HTTPS URL below
                 ResponseEntity<Object> responseEntity = restTemplate.getForEntity("http://jsonplaceholder.typicode.com/todos/1", Object.class);
                 if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
