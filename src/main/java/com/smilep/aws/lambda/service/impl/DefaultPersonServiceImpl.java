@@ -24,7 +24,7 @@ public class DefaultPersonServiceImpl implements PersonService {
 
     @Override
     public String process(Person person) {
-        log.info("Person to be processed : {}", person.toString());
+        log.info("Person received : {}", person.toString());
         try {
             CompletableFuture.runAsync(() -> {
                 log.info("HTTP call in new thread");
